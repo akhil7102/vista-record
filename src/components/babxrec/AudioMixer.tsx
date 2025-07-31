@@ -23,23 +23,23 @@ export const AudioMixer = () => {
 
   const getAudioBarColor = (position: number) => {
     if (position <= audioLevel) {
-      if (position <= 60) return 'bg-obs-success';
+      if (position <= 60) return 'bg-babxrec-success';
       if (position <= 80) return 'bg-yellow-500';
-      return 'bg-obs-recording';
+      return 'bg-babxrec-recording';
     }
-    return 'bg-obs-control';
+    return 'bg-babxrec-control';
   };
 
   return (
-    <div className="flex-1 bg-obs-panel p-4">
+    <div className="flex-1 bg-babxrec-panel p-4">
       <h3 className="text-sm font-medium mb-4 text-foreground">Audio Mixer</h3>
       
-      <div className="bg-obs-preview border border-obs-panel-border rounded p-4">
+      <div className="bg-babxrec-preview border border-babxrec-panel-border rounded p-4">
         <div className="mb-4">
           <p className="text-sm font-medium text-foreground mb-2">Desktop Audio</p>
           
           {/* Audio Level Meter */}
-          <div className="h-3 bg-obs-control rounded mb-3 overflow-hidden">
+          <div className="h-3 bg-babxrec-control rounded mb-3 overflow-hidden">
             <div className="h-full flex">
               {Array.from({ length: 20 }, (_, i) => (
                 <div
@@ -74,7 +74,7 @@ export const AudioMixer = () => {
               size="sm"
               variant="ghost"
               onClick={() => setIsMuted(!isMuted)}
-              className={`p-2 hover:bg-obs-control-hover ${isMuted ? 'bg-obs-recording/20' : ''}`}
+              className={`p-2 hover:bg-babxrec-control-hover ${isMuted ? 'bg-babxrec-recording/20' : ''}`}
               title={isMuted ? "Unmute" : "Mute"}
             >
               {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
@@ -83,7 +83,7 @@ export const AudioMixer = () => {
             <Button
               size="sm"
               variant="ghost"
-              className="p-2 hover:bg-obs-control-hover"
+              className="p-2 hover:bg-babxrec-control-hover"
               title="Audio Settings"
             >
               <Settings className="w-4 h-4" />

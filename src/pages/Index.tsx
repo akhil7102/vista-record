@@ -1,7 +1,7 @@
-import { OBSRecorder } from "./OBSRecorder";
+import { BabxRecorder } from "./BabxRecorder";
 
 const Index = () => {
-  return <OBSRecorder />;
+  return <BabxRecorder />;
 };
 
 export default Index;

@@ -17,13 +17,13 @@ export const RecordingControls = ({
   onPause,
 }: RecordingControlsProps) => {
   return (
-    <div className="w-48 bg-obs-panel border-r border-obs-panel-border p-4">
+    <div className="w-48 bg-babxrec-panel border-r border-babxrec-panel-border p-4">
       <h3 className="text-sm font-medium mb-4 text-foreground">Controls</h3>
       <div className="space-y-3">
         <Button
           onClick={onStart}
           disabled={isRecording}
-          className="w-full bg-obs-recording hover:bg-obs-recording/90 text-white font-medium"
+          className="w-full bg-babxrec-recording hover:bg-babxrec-recording/90 text-white font-medium"
           size="lg"
         >
           <Play className="w-4 h-4 mr-2" />

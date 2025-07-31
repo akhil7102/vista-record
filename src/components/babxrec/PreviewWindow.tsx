@@ -16,8 +16,8 @@ export const PreviewWindow = ({ stream, isRecording }: PreviewWindowProps) => {
   }, [stream]);
 
   return (
-    <div className="flex-1 flex justify-center items-start p-5">
-      <div className="relative w-[70%] aspect-video bg-obs-preview border-2 border-obs-preview-border rounded-lg shadow-[var(--shadow-preview)] overflow-hidden">
+    <div className="flex-1 flex justify-center items-start px-4 py-2">
+      <div className="relative w-full max-w-[85%] aspect-video bg-babxrec-preview border-2 border-babxrec-preview-border rounded-lg shadow-[var(--shadow-preview)] overflow-hidden">
         {stream ? (
           <>
             <video
@@ -28,7 +28,7 @@ export const PreviewWindow = ({ stream, isRecording }: PreviewWindowProps) => {
               className="w-full h-full object-contain"
             />
             {isRecording && (
-              <div className="absolute top-4 right-4 flex items-center gap-2 bg-obs-recording/90 text-white px-3 py-1 rounded-full text-sm font-medium">
+              <div className="absolute top-4 right-4 flex items-center gap-2 bg-babxrec-recording/90 text-white px-3 py-1 rounded-full text-sm font-medium">
                 <div className="w-2 h-2 bg-white rounded-full animate-pulse" />
                 REC
               </div>

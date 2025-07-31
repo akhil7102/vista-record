@@ -1,10 +1,10 @@
 import { useState, useRef } from "react";
-import { MenuBar } from "@/components/obs/MenuBar";
-import { PreviewWindow } from "@/components/obs/PreviewWindow";
-import { RecordingControls } from "@/components/obs/RecordingControls";
-import { SceneManager } from "@/components/obs/SceneManager";
-import { SourceManager } from "@/components/obs/SourceManager";
-import { AudioMixer } from "@/components/obs/AudioMixer";
+import { MenuBar } from "@/components/babxrec/MenuBar";
+import { PreviewWindow } from "@/components/babxrec/PreviewWindow";
+import { RecordingControls } from "@/components/babxrec/RecordingControls";
+import { SceneManager } from "@/components/babxrec/SceneManager";
+import { SourceManager } from "@/components/babxrec/SourceManager";
+import { AudioMixer } from "@/components/babxrec/AudioMixer";
 import { useToast } from "@/hooks/use-toast";
 
 interface Scene {
@@ -18,7 +18,7 @@ interface Source {
   type: 'screen' | 'window';
 }
 
-export const OBSRecorder = () => {
+export const BabxRecorder = () => {
   const [scenes, setScenes] = useState<Scene[]>([
     { id: '1', name: 'Default Scene' }
   ]);
@@ -84,8 +84,16 @@ export const OBSRecorder = () => {
   const handleSourceAdd = async (type: 'screen' | 'window') => {
     try {
       const stream = await navigator.mediaDevices.getDisplayMedia({
-        video: true,
-        audio: true,
+        video: {
+          width: { ideal: 1920, max: 1920 },
+          height: { ideal: 1080, max: 1080 },
+          frameRate: { ideal: 30, max: 60 }
+        },
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          sampleRate: 44100
+        },
       });
 
       const newSource: Source = {
@@ -154,7 +162,21 @@ export const OBSRecorder = () => {
 
     try {
       recordedChunksRef.current = [];
-      mediaRecorderRef.current = new MediaRecorder(currentStream);
+      const options = {
+        mimeType: 'video/webm;codecs=vp9,opus'
+      };
+      
+      // Fallback to simpler codec if VP9/Opus not supported
+      if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+        options.mimeType = 'video/webm;codecs=vp8,vorbis';
+      }
+      
+      // Final fallback
+      if (!MediaRecorder.isTypeSupported(options.mimeType)) {
+        options.mimeType = 'video/webm';
+      }
+      
+      mediaRecorderRef.current = new MediaRecorder(currentStream, options);
 
       mediaRecorderRef.current.ondataavailable = (event) => {
         if (event.data.size > 0) {
@@ -170,7 +192,7 @@ export const OBSRecorder = () => {
         const a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
-        a.download = `recording-${new Date().toISOString().slice(0, 19)}.webm`;
+        a.download = `babxrec-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.webm`;
         document.body.appendChild(a);
         a.click();
         setTimeout(() => {
@@ -239,7 +261,7 @@ export const OBSRecorder = () => {
       </div>
 
       {/* Bottom Section */}
-      <div className="flex h-64 border-t border-obs-panel-border">
+      <div className="flex h-64 border-t border-babxrec-panel-border">
         <RecordingControls
           isRecording={isRecording}
           isPaused={isPaused}

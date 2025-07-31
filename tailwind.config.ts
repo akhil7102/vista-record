@@ -52,15 +52,15 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				obs: {
-					panel: 'hsl(var(--obs-panel))',
-					'panel-border': 'hsl(var(--obs-panel-border))',
-					preview: 'hsl(var(--obs-preview))',
-					'preview-border': 'hsl(var(--obs-preview-border))',
-					control: 'hsl(var(--obs-control))',
-					'control-hover': 'hsl(var(--obs-control-hover))',
-					recording: 'hsl(var(--obs-recording))',
-					success: 'hsl(var(--obs-success))',
+				babxrec: {
+					panel: 'hsl(var(--babxrec-panel))',
+					'panel-border': 'hsl(var(--babxrec-panel-border))',
+					preview: 'hsl(var(--babxrec-preview))',
+					'preview-border': 'hsl(var(--babxrec-preview-border))',
+					control: 'hsl(var(--babxrec-control))',
+					'control-hover': 'hsl(var(--babxrec-control-hover))',
+					recording: 'hsl(var(--babxrec-recording))',
+					success: 'hsl(var(--babxrec-success))',
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',

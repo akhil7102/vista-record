@@ -36,15 +36,15 @@ All colors MUST be HSL.
     --input: 210 6% 21%;
     --ring: 0 72% 60%;
 
-    /* OBS-specific design tokens */
-    --obs-panel: 210 11% 15%;
-    --obs-panel-border: 210 6% 21%;
-    --obs-preview: 0 0% 0%;
-    --obs-preview-border: 210 6% 25%;
-    --obs-control: 210 6% 25%;
-    --obs-control-hover: 210 6% 30%;
-    --obs-recording: 0 72% 60%;
-    --obs-success: 120 60% 50%;
+    /* BabxRec-specific design tokens */
+    --babxrec-panel: 210 11% 15%;
+    --babxrec-panel-border: 210 6% 21%;
+    --babxrec-preview: 0 0% 0%;
+    --babxrec-preview-border: 210 6% 25%;
+    --babxrec-control: 210 6% 25%;
+    --babxrec-control-hover: 210 6% 30%;
+    --babxrec-recording: 0 72% 60%;
+    --babxrec-success: 120 60% 50%;
     
     /* Gradients */
     --gradient-recording: linear-gradient(135deg, hsl(0 72% 60%), hsl(0 72% 50%));
