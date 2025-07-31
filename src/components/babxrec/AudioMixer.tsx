@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Volume2, Settings, VolumeX } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
@@ -7,18 +7,70 @@ export const AudioMixer = () => {
   const [volume, setVolume] = useState([70]);
   const [isMuted, setIsMuted] = useState(false);
   const [audioLevel, setAudioLevel] = useState(0);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const animationRef = useRef<number>();
 
-  // Simulate audio level animation
+  // Monitor actual desktop audio levels
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (!isMuted) {
-        setAudioLevel(Math.random() * 100);
-      } else {
+    let stream: MediaStream | null = null;
+
+    const startAudioMonitoring = async () => {
+      try {
+        // Get desktop audio stream
+        stream = await navigator.mediaDevices.getDisplayMedia({
+          video: false,
+          audio: true
+        });
+
+        // Create audio context and analyser
+        audioContextRef.current = new AudioContext();
+        analyserRef.current = audioContextRef.current.createAnalyser();
+        analyserRef.current.fftSize = 256;
+
+        const source = audioContextRef.current.createMediaStreamSource(stream);
+        source.connect(analyserRef.current);
+
+        // Start analyzing audio levels
+        const dataArray = new Uint8Array(analyserRef.current.frequencyBinCount);
+        
+        const updateAudioLevel = () => {
+          if (analyserRef.current && !isMuted) {
+            analyserRef.current.getByteFrequencyData(dataArray);
+            
+            // Calculate average audio level
+            const average = dataArray.reduce((acc, val) => acc + val, 0) / dataArray.length;
+            const normalizedLevel = (average / 255) * 100;
+            
+            // Only show levels above a threshold to avoid showing noise
+            setAudioLevel(normalizedLevel > 2 ? normalizedLevel : 0);
+          } else {
+            setAudioLevel(0);
+          }
+          
+          animationRef.current = requestAnimationFrame(updateAudioLevel);
+        };
+
+        updateAudioLevel();
+      } catch (error) {
+        // If can't access desktop audio, keep level at 0
         setAudioLevel(0);
       }
-    }, 100);
+    };
 
-    return () => clearInterval(interval);
+    startAudioMonitoring();
+
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+      if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+      }
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
+      }
+    };
   }, [isMuted]);
 
   const getAudioBarColor = (position: number) => {
