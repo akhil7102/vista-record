@@ -16,8 +16,8 @@ export const PreviewWindow = ({ stream, isRecording }: PreviewWindowProps) => {
   }, [stream]);
 
   return (
-    <div className="flex-1 flex justify-center items-start px-4 py-2">
-      <div className="relative w-full max-w-[85%] aspect-video bg-babxrec-preview border-2 border-babxrec-preview-border rounded-lg shadow-[var(--shadow-preview)] overflow-hidden">
+    <div className="flex-1 flex justify-center items-start px-2 py-1">
+      <div className="relative w-full max-w-[95%] aspect-video bg-babxrec-preview border-2 border-babxrec-preview-border rounded-lg shadow-[var(--shadow-preview)] overflow-hidden">
         {stream ? (
           <>
             <video
