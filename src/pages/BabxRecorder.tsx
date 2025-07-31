@@ -43,6 +43,16 @@ export const BabxRecorder = () => {
   };
 
   const handleSceneDelete = (sceneId: string) => {
+    // Prevent deletion of the default scene
+    if (sceneId === '1') {
+      toast({
+        title: "Cannot delete default scene",
+        description: "The default scene cannot be deleted.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     const filteredScenes = scenes.filter(s => s.id !== sceneId);
     setScenes(filteredScenes);
     if (selectedScene === sceneId) {

@@ -127,7 +127,7 @@ export const SceneManager = ({
           onClick={() => selectedScene && onSceneDelete(selectedScene)}
           className="p-2 hover:bg-babxrec-control-hover"
           title="Delete Scene"
-          disabled={!selectedScene}
+          disabled={!selectedScene || selectedScene === '1'}
         >
           <Trash2 className="w-4 h-4" />
         </Button>
