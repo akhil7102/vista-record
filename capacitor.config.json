@@ -1,0 +1,14 @@
+{
+  "appId": "app.lovable.2ec9f8ba9da14f419b17cf8b0b3c57a7",
+  "appName": "vista-record",
+  "webDir": "dist",
+  "server": {
+    "url": "https://2ec9f8ba-9da1-4f41-9b17-cf8b0b3c57a7.lovableproject.com?forceHideBadge=true",
+    "cleartext": true
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  }
+}

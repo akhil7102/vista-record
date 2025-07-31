@@ -187,14 +187,19 @@ export const BabxRecorder = () => {
       mediaRecorderRef.current.onstop = () => {
         const blob = new Blob(recordedChunksRef.current, { type: 'video/webm' });
         const url = URL.createObjectURL(blob);
+        const filename = `babxrec-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.webm`;
 
-        // Auto-download the recording
+        // Create download link
         const a = document.createElement('a');
         a.style.display = 'none';
         a.href = url;
-        a.download = `babxrec-${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.webm`;
+        a.download = filename;
+        
+        // Force download
         document.body.appendChild(a);
         a.click();
+        
+        // Cleanup
         setTimeout(() => {
           document.body.removeChild(a);
           URL.revokeObjectURL(url);
