@@ -52,6 +52,16 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				obs: {
+					panel: 'hsl(var(--obs-panel))',
+					'panel-border': 'hsl(var(--obs-panel-border))',
+					preview: 'hsl(var(--obs-preview))',
+					'preview-border': 'hsl(var(--obs-preview-border))',
+					control: 'hsl(var(--obs-control))',
+					'control-hover': 'hsl(var(--obs-control-hover))',
+					recording: 'hsl(var(--obs-recording))',
+					success: 'hsl(var(--obs-success))',
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
