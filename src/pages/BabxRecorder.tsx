@@ -173,6 +173,29 @@ export const BabxRecorder = () => {
 
     try {
       recordedChunksRef.current = [];
+      
+      // Create a combined stream with video and audio
+      let combinedStream = currentStream;
+      
+      try {
+        // Try to get desktop audio
+        const audioStream = await navigator.mediaDevices.getDisplayMedia({
+          video: false,
+          audio: true
+        });
+        
+        // Combine video from current stream with audio from desktop
+        const videoTracks = currentStream.getVideoTracks();
+        const audioTracks = audioStream.getAudioTracks();
+        
+        if (videoTracks.length > 0 && audioTracks.length > 0) {
+          combinedStream = new MediaStream([...videoTracks, ...audioTracks]);
+        }
+      } catch (audioError) {
+        // If audio capture fails, continue with video only
+        console.log("Audio capture failed, recording video only");
+      }
+      
       const options = {
         mimeType: 'video/webm;codecs=vp9,opus'
       };
@@ -187,7 +210,7 @@ export const BabxRecorder = () => {
         options.mimeType = 'video/webm';
       }
       
-      mediaRecorderRef.current = new MediaRecorder(currentStream, options);
+      mediaRecorderRef.current = new MediaRecorder(combinedStream, options);
 
       mediaRecorderRef.current.ondataavailable = (event) => {
         if (event.data.size > 0) {
