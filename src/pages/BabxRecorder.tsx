@@ -5,6 +5,7 @@ import { RecordingControls } from "@/components/babxrec/RecordingControls";
 import { SceneManager } from "@/components/babxrec/SceneManager";
 import { SourceManager } from "@/components/babxrec/SourceManager";
 import { AudioMixer } from "@/components/babxrec/AudioMixer";
+import { SettingsDialog, RecordingSettings } from "@/components/babxrec/SettingsDialog";
 import { useToast } from "@/hooks/use-toast";
 
 interface Scene {
@@ -19,6 +20,15 @@ interface Source {
 }
 
 export const BabxRecorder = () => {
+  const { toast } = useToast();
+  
+  // Recording settings
+  const [recordingSettings, setRecordingSettings] = useState<RecordingSettings>({
+    resolution: "720p",
+    fileType: "webm"
+  });
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  
   const [scenes, setScenes] = useState<Scene[]>([
     { id: '1', name: 'Default Scene' }
   ]);
@@ -31,7 +41,6 @@ export const BabxRecorder = () => {
   
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const recordedChunksRef = useRef<Blob[]>([]);
-  const { toast } = useToast();
 
   // Scene Management
   const handleSceneAdd = (name: string) => {
@@ -295,7 +304,7 @@ export const BabxRecorder = () => {
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       {/* Top Section */}
       <div className="flex items-start p-4 flex-1">
-        <MenuBar />
+        <MenuBar onSettingsClick={() => setIsSettingsOpen(true)} />
         <PreviewWindow stream={currentStream} isRecording={isRecording} />
       </div>
 
@@ -333,6 +342,14 @@ export const BabxRecorder = () => {
           <AudioMixer />
         </div>
       </div>
+      
+      {/* Settings Dialog */}
+      <SettingsDialog
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        settings={recordingSettings}
+        onSettingsChange={setRecordingSettings}
+      />
     </div>
   );
 };

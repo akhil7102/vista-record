@@ -1,13 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Settings, HelpCircle, File } from "lucide-react";
 
-export const MenuBar = () => {
+interface MenuBarProps {
+  onSettingsClick: () => void;
+}
+
+export const MenuBar = ({ onSettingsClick }: MenuBarProps) => {
   return (
     <div className="flex gap-2 bg-babxrec-panel border border-babxrec-panel-border rounded-lg p-3 w-fit">
       <Button
         variant="ghost"
         size="sm"
         className="hover:bg-babxrec-control-hover"
+        onClick={onSettingsClick}
       >
         <Settings className="w-4 h-4 mr-2" />
         Settings
