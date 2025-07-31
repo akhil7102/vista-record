@@ -43,9 +43,10 @@ export const BabxRecorder = () => {
   };
 
   const handleSceneDelete = (sceneId: string) => {
-    setScenes(prev => prev.filter(s => s.id !== sceneId));
+    const filteredScenes = scenes.filter(s => s.id !== sceneId);
+    setScenes(filteredScenes);
     if (selectedScene === sceneId) {
-      setSelectedScene(scenes[0]?.id || '');
+      setSelectedScene(filteredScenes[0]?.id || '');
     }
   };
 
